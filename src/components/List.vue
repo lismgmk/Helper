@@ -2,10 +2,12 @@
   <input v-model="inputUser" plaseholder="filter..."/>
   <ul>
     <li
-        v-for="(user, index) in filterUser"
+        v-for="(dataforItem, index) in filterBuInput"
         :key="index"
     >
-      {{ user.name}} -- {{user.email}}
+      <component :is="customComponents"
+      :fields="dataforItem"
+      />
     </li>
   </ul>
 </template>
@@ -23,16 +25,28 @@ export default {
       type: Array,
       default: ()=>{
         return []
-      }
+      },
+      required: true
     },
     filterVal: {
       type: String,
-    }
+      required: true
+    },
+    customComponents: {
+      type: Object,
+      required: true
+    },
+
   },
 
+watch:{
+    item(p){
+      console.log(p, 'props')
+    }
+},
 
   computed: {
-    filterUser() {
+    filterBuInput() {
       return this.item.filter(u => {
         return u[this.filterVal].toLowerCase().indexOf(this.inputUser.toLocaleLowerCase()) !== -1
       })

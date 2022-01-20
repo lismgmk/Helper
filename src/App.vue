@@ -1,9 +1,8 @@
 <template>
   <div>
     <h1>Slots</h1>
-
-    <List :item="users" :filterVal="filterValUser" />
-    <List :item="todos" :filterVal="filterValTodos"/>
+    <List :filterVal="filterUser" :item="this.users"  :customComponents="$options.customComponents.Item"/>
+    <List :filterVal="filterTodos" :item="this.todos"  :customComponents="$options.customComponents.ItemTodo"/>
   </div>
 </template>
 
@@ -12,25 +11,47 @@
 import {getTodos, getUsers} from "./Api";
 import List from "./components/List";
 import Item from "./components/Item";
+import ItemTodo from "./components/ItemTodo";
 
 export default {
   name: 'App',
   components: {
-    List,
-    Item
+    List
+  },
+
+  customComponents: {
+    Item, ItemTodo
   },
 
   data() {
     return {
       users: [],
       todos: [],
-      filterValUser: 'name',
-      filterValTodos: 'title',
-      drawFieldsUser: ['name', 'email'],
-      drawFieldsTodos: ['completed', 'title', 'userId'],
+      // drawFieldsUser: ['name', 'email'],
+      // drawFieldsTodos: ['completed', 'title'],
+      filterUser: 'name',
+      filterTodos: 'title'
     }
   },
-
+  //
+  // methods: {
+  //   filterData(data, filterData){
+  //     const helperArr = []
+  //     data.map((i)=>{
+  //      helperArr.push(i[filterData[0]], i[filterData[1]])
+  //       return i
+  //     })
+  //     return helperArr
+  //   }
+  // },
+// computed:{
+//   filterUsers(){
+//     return  this.filterData(this.users, this.drawFieldsUser)
+//   },
+//   filterTodos(){
+//     return  this.filterData(this.todos, this.drawFieldsTodos)
+//   },
+// },
 
   mounted() {
     getUsers().then(data => this.users = data)

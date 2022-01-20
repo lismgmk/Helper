@@ -1,14 +1,15 @@
 <template>
-  {{fields[name]}} -- {{fields[email]}}
+  <input type="checkbox" checked={fields[completed]}/>
+  {{ fields[title] }}
 </template>
 
 <script>
 export default {
-  name: "Item",
-  data(){
-    return{
-      name: 'name',
-      email: 'email'
+  name: "ItemTodo",
+  data() {
+    return {
+      completed: 'completed',
+      title: 'title'
     }
   },
   props: {
@@ -19,7 +20,8 @@ export default {
         return {}
       }
     },
-  }
+  },
+
 
 }
 </script>
