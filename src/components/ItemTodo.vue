@@ -1,5 +1,5 @@
 <template>
-  <input type="checkbox" checked={fields[completed]}/>
+  <input type="checkbox" :checked="fields[completed]" />
   {{ fields[title] }}
 </template>
 

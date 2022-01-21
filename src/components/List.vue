@@ -5,9 +5,11 @@
         v-for="(dataforItem, index) in filterBuInput"
         :key="index"
     >
-      <component :is="customComponents"
-      :fields="dataforItem"
-      />
+<!--      <component-->
+<!--          :is="customComponents"-->
+<!--          :fields="dataforItem"-->
+<!--      />-->
+    <slot name="itemSlot" :data="dataforItem"></slot>
     </li>
   </ul>
 </template>
@@ -15,15 +17,15 @@
 <script>
 export default {
   name: "List",
-  data(){
-    return{
+  data() {
+    return {
       inputUser: ''
-  }
+    }
   },
   props: {
     item: {
       type: Array,
-      default: ()=>{
+      default: () => {
         return []
       },
       required: true
@@ -39,11 +41,11 @@ export default {
 
   },
 
-watch:{
-    item(p){
+  watch: {
+    item(p) {
       console.log(p, 'props')
     }
-},
+  },
 
   computed: {
     filterBuInput() {
