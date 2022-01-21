@@ -11,7 +11,6 @@
       </template>
 
     </List>
-    <!--    <List :filterVal="filterTodos" :item="this.todos"  :customComponents="$options.customComponents.ItemTodo"/>-->
     <List :filterVal="filterTodos" :item="this.todos">
       <template #itemSlot="{data: item}">
         <ItemTodo :fields="item"/>
@@ -19,7 +18,8 @@
 
     </List>
 
-    <PopUp @hide-modal="hideModal" v-show='opened'>
+
+    <PopUp @hide-modal-popup="hideModal" v-show='opened'>
       <template v-slot:content>
         <div>
           Anything that I am going to do now!!!
@@ -27,8 +27,10 @@
         </div>
       </template>
       <template #button-block>
-        <SimpleButton @close-modal="hideModal"/>
-        <AlarmButtonButton @close-modal="hideModal"/>
+        <AlarmButton @hide-modal-alarmBut="hideModal"/>
+      </template>
+      <template #button-block-simple>
+        <SimpleButton @hide-modal-simpleBut="hideModal"/>
       </template>
     </PopUp>
   </div>
@@ -53,10 +55,6 @@ export default {
     List, Item, ItemTodo
   },
 
-  // customComponents: {
-  //   Item, ItemTodo
-  // },
-
   data() {
     return {
       users: [],
@@ -71,14 +69,13 @@ export default {
       document.body.classList.add("modal-open");
       this.opened = true
     },
-    hideModal(flag){
-      console.log(flag)
+    hideModal(flag) {
       document.body.classList.remove("modal-open");
       this.opened = flag
     }
   },
-  watch:{
-    opened(){
+  watch: {
+    opened() {
       return this.opened
     }
   },

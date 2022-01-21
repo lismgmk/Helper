@@ -6,13 +6,13 @@
 export default {
   name: "SimpleButton",
   emits:{
-    'close-modal': value => {
+    'hide-modal-simpleBut': value => {
       return typeof value === "boolean"
     },
   },
   methods:{
     hideModal(){
-      this.$emit('close-modal', false)
+      this.$emit('hide-modal-simpleBut', false)
     }
   }
 }

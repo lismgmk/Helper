@@ -1,6 +1,6 @@
 <template>
-  <input type="text" v-model="dataValue">
-  <button disabled="disabled" @click="hideModal">Ok</button>
+  <input type="text" v-model="value" >
+  <button :disabled="flag" @click="hideModal">Ok</button>
 </template>
 
 <script>
@@ -8,18 +8,26 @@ export default {
   name: "AlarmButton",
   data(){
     return{
-      dataValue: 'Enter data',
-      disabled: true
+      value: 'Enter data',
     }
+  },
+  emits:{
+    'hide-modal-alarmBut': value => {
+      return typeof value === "boolean"
+    },
   },
   methods: {
     hideModal() {
-    this.dataValue === '55' &&  this.$emit('hide-modal', false)
+      this.$emit('hide-modal-alarmBut', false)
     },
   },
-  computed:{
 
-  }
+computed:{
+    flag(){
+      return this.value !== 'lol';
+    }
+}
+
 }
 </script>
 
