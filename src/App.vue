@@ -19,7 +19,7 @@
     </List>
 
 
-    <PopUp @hide-modal-popup="hideModal" v-show='opened'>
+    <PopUp @hide-modal-popup="hideModal" v-show='opened' :message="messageConsole">
       <template v-slot:content>
         <div>
           Anything that I am going to do now!!!
@@ -61,7 +61,8 @@ export default {
       todos: [],
       opened: false,
       filterUser: 'name',
-      filterTodos: 'title'
+      filterTodos: 'title',
+      messageConsole: ''
     }
   },
   methods: {
@@ -72,11 +73,16 @@ export default {
     hideModal(flag) {
       document.body.classList.remove("modal-open");
       this.opened = flag
+      this.messageConsole = 'Event called in popup'
     }
   },
   watch: {
     opened() {
       return this.opened
+    },
+    messageConsole(newProp) {
+      // console.log(newProp, 'in appp')
+      return newProp
     }
   },
   mounted() {

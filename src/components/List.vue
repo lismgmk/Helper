@@ -15,7 +15,7 @@ export default {
   name: "List",
   data() {
     return {
-      inputUser: 'filter...'
+      inputUser: ''
     }
   },
   props: {

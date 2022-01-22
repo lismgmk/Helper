@@ -11,11 +11,12 @@ export default {
       value: 'Enter data',
     }
   },
-  emits:{
-    'hide-modal-alarmBut': value => {
-      return typeof value === "boolean"
-    },
-  },
+  // emits:{
+  //   'hide-modal-alarmBut': value => {
+  //     return typeof value === "boolean"
+  //   },
+  // },
+  emits: ['hide-modal-alarmBut'],
   methods: {
     hideModal() {
       this.$emit('hide-modal-alarmBut', false)

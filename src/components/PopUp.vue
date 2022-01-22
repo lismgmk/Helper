@@ -12,6 +12,12 @@
 <script>
 export default {
   name: "PopUp",
+  props:{
+    message:{
+      type: String,
+      require: false
+    }
+  },
   emits:{
     'hide-modal-popup': value => {
       return typeof value === "boolean"
@@ -22,6 +28,16 @@ export default {
       this.$emit('hide-modal-popup', false)
     },
   },
+  watch: {
+    message(val){
+      console.log(val)
+    },
+  }
+  // computed:{
+  //   consoleMethod(){
+  //     return
+  //   }
+  // }
 }
 </script>
 
