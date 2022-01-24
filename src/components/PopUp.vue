@@ -26,13 +26,15 @@ export default {
   methods: {
     hideModal() {
       this.$emit('hide-modal-popup', false)
-    },
+    }
+
   },
   watch: {
     message(val){
       console.log(val)
     },
-  }
+  },
+
   // computed:{
   //   consoleMethod(){
   //     return

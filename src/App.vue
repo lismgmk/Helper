@@ -19,7 +19,7 @@
     </List>
 
 
-    <PopUp @hide-modal-popup="hideModal" v-show='opened' :message="messageConsole">
+    <PopUp @hide-modal-popup="hideModal" v-show='opened' >
       <template v-slot:content>
         <div>
           Anything that I am going to do now!!!
@@ -62,7 +62,6 @@ export default {
       opened: false,
       filterUser: 'name',
       filterTodos: 'title',
-      messageConsole: ''
     }
   },
   methods: {
@@ -73,21 +72,23 @@ export default {
     hideModal(flag) {
       document.body.classList.remove("modal-open");
       this.opened = flag
-      this.messageConsole = 'Event called in popup'
-    }
+    },
+    closeOnEscape(e) {
+      if(this.opened && e.key === 'Escape'){
+        this.opened = false
+      }
+          }
   },
   watch: {
     opened() {
       return this.opened
     },
-    messageConsole(newProp) {
-      // console.log(newProp, 'in appp')
-      return newProp
-    }
+
   },
   mounted() {
     getUsers().then(data => this.users = data)
     getTodos().then(data => this.todos = data)
+    document.addEventListener('keydown', this.closeOnEscape)
   }
 
 }
