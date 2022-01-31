@@ -1,21 +1,26 @@
 <template>
-  <div class="bgPopup" @click="hideModal">
+  <div v-if="opened" class="bgPopup" @click="hideModal">
     <div class="winPopup" @click.stop="">
       <h2>Some content</h2>
       <slot name="content"></slot>
       <slot name="button-block-simple"></slot>
-      <slot name="button-block"></slot>
+      <slot :emitFn="hideModal" name="button-block"></slot>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "PopUp",
   props:{
     message:{
       type: String,
       require: false
+    },
+    opened: {
+      type: Boolean,
+      require: true
     }
   },
   emits:{
@@ -26,20 +31,21 @@ export default {
   methods: {
     hideModal() {
       this.$emit('hide-modal-popup', false)
-    }
-
-  },
-  watch: {
-    message(val){
-      console.log(val)
     },
+    closeOnEscape(e) {
+      if (this.opened && e.key === 'Escape') {
+        this.$emit('hide-modal-popup', false)
+      }
+    }
   },
 
-  // computed:{
-  //   consoleMethod(){
-  //     return
-  //   }
-  // }
+  mounted() {
+    document.addEventListener('keydown', this.closeOnEscape)
+  },
+  beforeMount() {
+    document.removeEventListener('keydown', this.closeOnEscape)
+  }
+
 }
 </script>
 
