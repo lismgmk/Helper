@@ -1,9 +1,8 @@
 <template>
-  <div v-if="opened" class="bgPopup" @click="hideModal">
+  <div v-if="isOpened" class="bgPopup" @click="hideModal">
     <div class="winPopup" @click.stop="">
       <h2>Some content</h2>
       <slot name="content"></slot>
-      <slot name="button-block-simple"></slot>
       <slot :emitFn="hideModal" name="button-block"></slot>
     </div>
   </div>
@@ -13,31 +12,45 @@
 
 export default {
   name: "PopUp",
-  props:{
-    message:{
-      type: String,
-      require: false
-    },
-    opened: {
-      type: Boolean,
-      require: true
+  CUSTOM_CATCHER_PROMISE: null,
+  data(){
+    return{
+      isOpened: false
     }
   },
-  emits:{
-    'hide-modal-popup': value => {
-      return typeof value === "boolean"
-    },
-  },
+
   methods: {
     hideModal() {
-      this.$emit('hide-modal-popup', false)
+      this.isOpened = false
+      this.$options.CUSTOM_CATCHER_PROMISE.resolve(true)
+
     },
     closeOnEscape(e) {
-      if (this.opened && e.key === 'Escape') {
-        this.$emit('hide-modal-popup', false)
+      if (this.isOpened && e.key === 'Escape') {
+        this.isOpened = false
+        this.$options.CUSTOM_CATCHER_PROMISE.resolve(true)
       }
-    }
+    },
+
+    open() {
+      this.isOpened = true
+      let resolve;
+      let reject
+
+      const customPromise = new Promise((ok, failed) => {
+        resolve = ok
+        reject = failed
+      })
+      this.$options.CUSTOM_CATCHER_PROMISE = {resolve, reject}
+
+      return customPromise
+    },
+
   },
+
+
+
+
 
   mounted() {
     document.addEventListener('keydown', this.closeOnEscape)
