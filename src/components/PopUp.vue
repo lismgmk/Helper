@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpened" class="bgPopup" @click="hideModal">
+  <div v-if="isOpened" class="bgPopup" @click="hideModalSimple">
     <div class="winPopup" @click.stop="">
       <h2>Some content</h2>
       <slot name="content"></slot>
@@ -25,10 +25,15 @@ export default {
       this.$options.CUSTOM_CATCHER_PROMISE.resolve(true)
 
     },
+    hideModalSimple() {
+      this.isOpened = false
+      this.$options.CUSTOM_CATCHER_PROMISE.resolve(false)
+
+    },
     closeOnEscape(e) {
       if (this.isOpened && e.key === 'Escape') {
         this.isOpened = false
-        this.$options.CUSTOM_CATCHER_PROMISE.resolve(true)
+        this.$options.CUSTOM_CATCHER_PROMISE.resolve(false)
       }
     },
 

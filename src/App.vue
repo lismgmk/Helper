@@ -70,9 +70,7 @@ export default {
             if (closeModalAsync) {
               document.body.classList.remove("modal-open");
               alert('confirm')
-
             }
-
     },
 
   },
